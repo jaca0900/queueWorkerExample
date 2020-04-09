@@ -1,9 +1,19 @@
-version: "3"
+version: "3.7"
 
 services:
     rabbitmq:
-        image: rabbitmq:latest
+        image: rabbitmq:3.8.3
         container_name: rabbitmq
         ports:
             - 5672:5672
             - 15672:15672
+    queueapp:
+        build:
+            context: .
+            dockerfile: dockerfile
+        ports:
+            - 3000:3000
+        environment:
+            - RABBIT_HOST=amqp://192.168.99.100
+            - RABBIT_PORT=5672
+            - GENERATOR_INTERVAL=5000

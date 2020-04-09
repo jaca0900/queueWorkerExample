@@ -1,25 +1,22 @@
 import { Router, Application, Response, Request } from 'express';
-import { Producer } from './producer'
 import { json as jsonParser } from 'body-parser';
+import { ProducerController } from './producer.controller';
 
 export class ProducerRouter {
     private router: Router;
-    private producer: Producer;
 
-    constructor(private app: Application) {
+    constructor(private app: Application, private controller: ProducerController) {
         this.router = Router();
-        this.producer = new Producer(process.env.RABBIT_HOST || 'amqp://192.168.99.100');
     }
 
     register() {
         const parser = jsonParser();
 
         this.router.post('/send', parser, async (req: Request, res: Response) => {
-            const { message } = req.body
-            try {
-                await this.producer.connectToQueueService();
+            const { queue, message } = req.body
 
-                await this.producer.sendMessage('test', message);
+            try {
+                this.controller.sendMessage(queue, message);
             } catch (err) {
                 return res.status(500).send(err.message)
             }

@@ -1,11 +1,13 @@
 import { Application } from 'express';
-import { ProducerRouter } from '../../components/producer/producer.router'
+import { ProducerRouter, ProducerController, ProducerConnector } from '../../components/producer';
 
 export class Router {
-    constructor(private app: Application) { }
+    constructor(private app: Application, private producerConnector: ProducerConnector) { }
 
     register() {
-        const producerRoutes = new ProducerRouter(this.app);
+        const producerController = new ProducerController(this.producerConnector);
+
+        const producerRoutes = new ProducerRouter(this.app, producerController);
 
         producerRoutes.register();
     }

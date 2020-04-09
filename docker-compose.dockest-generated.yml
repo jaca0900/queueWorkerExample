@@ -1,0 +1,21 @@
+services:
+  queueapp:
+    build:
+      context: C:\Users\Jacek\Projects\queWorker\queWorker
+      dockerfile: dockerfile
+    environment:
+      GENERATOR_INTERVAL: '5000'
+      RABBIT_HOST: amqp://192.168.99.100
+      RABBIT_PORT: '5672'
+    ports:
+    - published: 3000
+      target: 3000
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.8.3
+    ports:
+    - published: 5672
+      target: 5672
+    - published: 15672
+      target: 15672
+version: '3.7'

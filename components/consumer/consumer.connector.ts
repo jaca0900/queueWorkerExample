@@ -1,12 +1,12 @@
-import { RabbitConnector } from "../core/rabbit.connector";
+import { RabbitConnector } from '../core';
 
-export class Consumer extends RabbitConnector {
-    constructor(queueHost) {
-        super(queueHost);
+export class ConsumerConnector extends RabbitConnector {
+    constructor() {
+        super();
     }
 
-    public async connectToQueueService() {
-        await super.connect();
+    public connect() {
+        return super.connect();
     }
 
     private createListener(consumeMethod): () => void {
@@ -17,7 +17,7 @@ export class Consumer extends RabbitConnector {
     public async attatchConsumer(queue: string, consumeMethod: (message: any) => void): Promise<void> {
         if (!this.channel) {
 
-            return Promise.reject('Que service not connected');
+            return Promise.reject('Queue service not connected');
         }
 
         await this.channel.assertQueue(queue, {autoDelete: true});

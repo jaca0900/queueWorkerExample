@@ -1,13 +1,13 @@
-import { RabbitConnector } from '../core/rabbit.connector';
+import { RabbitConnector } from '../core';
 
-export class Producer extends RabbitConnector {
+export class ProducerConnector extends RabbitConnector {
 
-    constructor(queueHost) {
-        super(queueHost);
+    constructor() {
+        super();
     }
 
-    public async connectToQueueService() {
-        await super.connect();
+    public connect() {
+        return super.connect();
     }
 
     public async sendMessage(queue: string, message: any) {
