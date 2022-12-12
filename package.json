@@ -17,7 +17,7 @@
   "main": "app.js",
   "dependencies": {
     "debug": "^2.2.0",
-    "express": "^4.14.0",
+    "express": "^4.17.3",
     "amqplib": "0.5.5",
     "testcontainers": "2.7.0",
     "dockest": "2.0.1",
